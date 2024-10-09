@@ -1,0 +1,38 @@
+        body {
+            font-family: "Microsoft YaHei", "Noto Sans SC", Arial, sans-serif;
+            font-color: #000000
+            margin: 0;
+            padding: 0;
+        }
+        nav {
+            background-color: #FFFFFF;
+            padding: 150px;
+            position: fixed; /* 固定在页面侧边 */
+            top: 10;
+            left: 10;
+            height: 100%; /* 让导航栏占据整个页面高度 */
+            width: 200px; /* 设置导航栏的宽度 */
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 50;
+            padding: 50;
+        }
+        nav ul li {
+            margin-bottom: 15px; /* 增加列表项之间的间距 */
+        }
+        nav ul li a {
+            color: black;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: block;
+            width: 100%; /* 链接占满整个宽度 */
+        }
+        nav ul li a:hover {
+            background-color: #f5f5f5;
+        }
+        /* 调整内容区域的左边距，避免被导航栏遮挡 */
+        .content {
+            margin-left: 220px; /* 预留导航栏的宽度 */
+            padding: 20px;
+        }
