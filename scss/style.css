@@ -33,6 +33,6 @@
         }
         /* 调整内容区域的左边距，避免被导航栏遮挡 */
         .content {
-            margin-left: 220px; /* 预留导航栏的宽度 */
+            margin-left: 500px; /* 预留导航栏的宽度 */
             padding: 20px;
         }
