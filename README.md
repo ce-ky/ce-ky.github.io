@@ -1,3 +1,3 @@
 # ce-ky.github.io
-# hello! 
-# test words.
+hello! 
+test words.
