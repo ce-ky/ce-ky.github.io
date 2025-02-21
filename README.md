@@ -1,3 +1,3 @@
 ### My Website Intro
-hello! \n
+hello!
 test words.
