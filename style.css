@@ -101,3 +101,11 @@ nav ul footer {
     text-decoration: dashed;
 }
 
+.preserveSpace {
+    white-space: pre-wrap; /* 保留空格和换行 */
+}
+
+.contact {
+    text-align:center;
+}
+
