@@ -16,12 +16,18 @@ body {
 main {
     font-family: 'Monaspace Neon', Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 100px;;
     background-color: #ffffff00; /* 设置背景颜色为透明 */
 }
 
 main section {
-    font-size: xx-small;
+    font-size: medium;
+}
+
+main section a {
+    color: #000000;
+    text-decoration: underline;
+    text-underline-offset: 5px;
 }
 
 nav {
@@ -68,7 +74,16 @@ nav ul li body{
 }
 
 nav ul li a:hover {
+    text-underline-offset: 3px;
+    text-decoration: underline;
     color: #27b371;
+}
+
+nav ul footer {
+    font-family: 'Monaspace Neon', Arial, sans-serif;
+    width: 100%;
+    text-align: left;
+    bottom: 0;
 }
 
 /* 主要内容区域需要相应调整左边距 */
@@ -83,16 +98,6 @@ nav ul li a:hover {
 
 .myTitle:hover {
     color: #000000;
+    text-decoration: dashed;
 }
 
-footer {
-    font-family: 'Monaspace Neon', Arial, sans-serif;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #ffffff00;
-    text-align: left;
-    padding: 10px;
-    font-size: 12px;
-}
