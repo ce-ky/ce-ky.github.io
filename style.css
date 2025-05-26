@@ -1,10 +1,20 @@
+
+        @font-face {
+            font-family: 'Monaspace Neon';
+            src: url('../fonts/MonaspaceNeon-Light.otf') format('opentype');
+            font-weight: 300;
+            font-style: normal;
+        }
+  
         body {
-            font-family: "Microsoft YaHei", "Noto Sans SC", Arial, sans-serif;
-            font-color: #000000
+            font-family: 'Monaspace Neon', sans-serif;
+            font-size: 80px;
+            color: #000000;
             margin: 0;
             padding: 0;
         }
         nav {
+            font-family: 'Monaspace Neon', sans-serif;
             background-color: #FFFFFF;
             padding: 150px;
             position: fixed; /* ¹Ì¶¨ÔÚÒ³Ãæ²à±ß */
