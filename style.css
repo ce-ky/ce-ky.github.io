@@ -1,48 +1,98 @@
+@font-face {
+    font-family: 'Monaspace Neon';
+    src: url('fonts/MonaspaceNeon-Light.otf') format('opentype');
+    font-weight: 30;
+    font-style: normal;
+}
 
-        @font-face {
-            font-family: 'Monaspace Neon';
-            src: url('../fonts/MonaspaceNeon-Light.otf') format('opentype');
-            font-weight: 300;
-            font-style: normal;
-        }
-  
-        body {
-            font-family: 'Monaspace Neon', sans-serif;
-            font-size: 80px;
-            color: #000000;
-            margin: 0;
-            padding: 0;
-        }
-        nav {
-            font-family: 'Monaspace Neon', sans-serif;
-            background-color: #FFFFFF;
-            padding: 150px;
-            position: fixed; /* 固定在页面侧边 */
-            top: 10;
-            left: 10;
-            height: 100%; /* 让导航栏占据整个页面高度 */
-            width: 200px; /* 设置导航栏的宽度 */
-        }
-        nav ul {
-            list-style-type: none;
-            margin: 50;
-            padding: 50;
-        }
-        nav ul li {
-            margin-bottom: 15px; /* 增加列表项之间的间距 */
-        }
-        nav ul li a {
-            color: black;
-            text-decoration: none;
-            padding: 10px 20px;
-            display: block;
-            width: 100%; /* 链接占满整个宽度 */
-        }
-        nav ul li a:hover {
-            background-color: #f5f5f5;
-        }
-        /* 调整内容区域的左边距，避免被导航栏遮挡 */
-        .content {
-            margin-left: 500px; /* 预留导航栏的宽度 */
-            padding: 20px;
-        }
+body {
+    font-family: 'Monaspace Neon', Arial, sans-serif;
+    font-size: 5px;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    font-family: 'Monaspace Neon', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff00; /* 设置背景颜色为透明 */
+}
+
+main section {
+    font-size: xx-small;
+}
+
+nav {
+    background-color: #ffffff00;
+    padding: 45px; /* 减少内边距 */
+    position: fixed;
+    top: 60%;             /* 距离视口顶部 50% */
+    left: 0;             /* 紧贴右边 */
+    transform: translateY(-50%);  /* 自身向上移动自身高度的 50%，实现垂直居中 */
+    height: 80%;
+    width: 3000px; /* 增加宽度给文字更多空间 */
+    box-sizing: border-box; /* 确保padding包含在width内 */
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    margin-bottom: 5px;
+    font-family: 'Monaspace Neon', Arial, sans-serif;
+    font-size: 20px;
+    color: black;
+}
+
+/* nav中的超链接 */
+nav ul li a {
+    color:#000000;
+    text-decoration: none;
+    display: inline-block; /* 改为inline-block */
+    min-width: 200px; /* 设置最小宽度 */
+    white-space: nowrap; /* 防止文字换行 */
+    word-break: keep-all; /* 保持单词完整 */
+}
+
+/* nav中的文字 */
+nav ul li body{
+    font-size: 15px;
+    margin: 100px; /* 增加左边距 */
+    font-weight: bold;
+    color: #000000;
+}
+
+nav ul li a:hover {
+    color: #27b371;
+}
+
+/* 主要内容区域需要相应调整左边距 */
+.content {
+    margin-left: 350px; /* 调整以匹配新的导航栏宽度 */
+    padding: 20px;
+}
+
+.myTitle {
+    font-size: xx-large;
+}
+
+.myTitle:hover {
+    color: #000000;
+}
+
+footer {
+    font-family: 'Monaspace Neon', Arial, sans-serif;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff00;
+    text-align: left;
+    padding: 10px;
+    font-size: 12px;
+}
