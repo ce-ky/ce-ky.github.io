@@ -4,27 +4,48 @@
     font-weight: 30;
     font-style: normal;
 }
+@font-face{
+    font-family:'ApricotXenC';
+    src: url('fonts/Web437_Tandy2K.woff') format('woff');
+}
+@font-face{
+    font-family:'zpix';
+    src: url('fonts/zpix.ttf') format('truetype');
+}
+
+img{
+    width: auto !important;       /* 不强制拉伸到容器宽度 */
+    height: auto !important;      /* 保持原始高度 */
+    max-width: none !important;   /* 取消“最大宽度 100%”的响应式缩放 */
+    max-height: none !important;  /* 取消“最大高度 100%”的限制 */
+}
 
 body {
-    font-family: 'Monaspace Neon',"Microsoft YaHei", Arial, sans-serif;
-    font-size: 5px;
+    font-family: 'zpix';
     color: #000000;
     margin: 0;
     padding: 0;
+    margin-left: 150px; /* 调整以匹配新的导航栏宽度 */
+    padding: 20px;
 }
 
 main {
-    font-family: 'Monaspace Neon',"Microsoft YaHei", Arial, sans-serif;
+    z-index: 1;
+    font-family: 'zpix';
     margin: 0;
     padding: 100px;;
-    background-color: #ffffff00; /* 设置背景颜色为透明 */
+}
+
+p {
+    font-size:12px;
 }
 
 main section {
-    font-size: medium;
+    font-size: 12px;
 }
 
 main section a {
+    font-size: 12px;
     color: #000000;
     text-decoration: underline;
     text-underline-offset: 5px;
@@ -35,15 +56,16 @@ nav {
     padding: 45px; /* 减少内边距 */
     position: fixed;
     top: 60%;             /* 距离视口顶部 50% */
-    left: 0;             /* 紧贴右边 */
+    left: 0; 
     transform: translateY(-50%);  /* 自身向上移动自身高度的 50%，实现垂直居中 */
     height: 80%;
-    width: 3000px; /* 增加宽度给文字更多空间 */
+    width: 300px; /* 增加宽度给文字更多空间 */
     box-sizing: border-box; /* 确保padding包含在width内 */
+    z-index: 0;
 }
 
 nav ul {
-    font-family: 'Monaspace Neon',"Microsoft YaHei", Arial, sans-serif;
+    font-family: 'zpix';
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -51,8 +73,8 @@ nav ul {
 }
 
 nav ul li {
+    font-size: 24px;
     margin-bottom: 5px;
-    font-size: 20px;
     color: black;
 }
 
@@ -60,68 +82,54 @@ nav ul li {
 nav ul li a {
     color:#000000;
     text-decoration: none;
-    display: inline-block; /* 改为inline-block */
+    display: inline-block; /* 使链接可设置宽度 */
     white-space: nowrap; /* 防止文字换行 */
     word-break: keep-all; /* 保持单词完整 */
 }
 
-/* nav中的文字 */
-nav ul body{
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 5px;
-    margin: 100px; /* 增加左边距 */
-    font-weight: lighter;
-    color: #000000;
-}
-
 nav ul li a:hover {
-    text-underline-offset: 3px;
+    text-underline-offset: 8px;
     text-decoration: underline;
-    color: #27b371;
+    color: #aaaaaa;
 }
 
 nav ul footer {
-    width: 100%;
+    font-size: 12px;
     text-align: left;
     bottom: 0;
 }
 
-text-icon{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-text-icon[icon="instagram"] {
-  background-image: url("/files/icons/insta_logo.png");
-}
-
-text-icon[icon="twitter"] {
-  background-image: url("/files/icons/x_logo.png");
-}
-
 /* 主要内容区域需要相应调整左边距 */
-.content {
-    margin-left: 350px; /* 调整以匹配新的导航栏宽度 */
-    padding: 20px;
+.content-en{
+    font-family: 'zpix';
+    font-size: 12px;
 }
 
-.myTitle {
-    font-size: xx-large;
+/* 2. 内容层提到最上面，但是自身透明穿透事件 */
+.content-wrapper {
+    margin-left: 150px; /* 调整以匹配新的导航栏宽度 */
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+    pointer-events: none;  /* 本身对事件（包括文字选取）全透明 */
+}
+
+/* 3. 内容里的文本、链接等恢复交互和可选 */
+.content-wrapper * {
+  pointer-events: auto;  /* 允许文字选取、点击等 */
+  user-select: text;     /* 确保文字可选 */
+}
+
+.title {
+    font-size: 24px;
     color:#000000;
     font-weight:lighter;
     text-decoration: none;
 }
 
-.myTitle:hover {
+.title:hover {
     color: #000000;
     text-decoration: dashed;
-}
-
-.preserveSpace {
-    white-space: pre-wrap; /* 保留空格和换行 */
 }
 
 .contact {
