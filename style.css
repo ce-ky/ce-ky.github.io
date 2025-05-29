@@ -21,20 +21,23 @@
     padding: 0; 
 }
 
+body{
+    padding: 0;
+}
+
 img{
+    align-content: middle; /* 图片垂直居中 */
     width: auto !important;       /* 不强制拉伸到容器宽度 */
     height: auto !important;      /* 保持原始高度 */
     max-width: none !important;   /* 取消“最大宽度 100%”的响应式缩放 */
     max-height: none !important;  /* 取消“最大高度 100%”的限制 */
 }
 
-body {
-    font-family: 'ApricotXenC','zpix';
+body p{
+    font-family:'zpix';
     color: #000000;
     margin: 0;
     padding: 0;
-    margin-left: 150px; /* 调整以匹配新的导航栏宽度 */
-    padding: 20px;
 }
 
 main {
@@ -48,6 +51,7 @@ a {
     text-decoration: underline;
     text-underline-offset: 5px;
 }
+
 
 section {
     font-size: 12px;
