@@ -58,18 +58,17 @@ section {
 }
 
 nav {
-    background-color: #00ffaa;
-    background-image: url('files/20240729-0.png');
-    background-size: 200%;
-    padding: 45px; /* 减少内边距 */
+    background-color: #00ce89ea;
+    padding: 10px; /* 减少内边距 */
     position: fixed;
-    top: 60%;
-    left: 0; 
-    transform: translateY(-50%);  /* 自身向上移动自身高度的 50%，实现垂直居中 */
-    height: 80%;
-    width: 260px; /* 增加宽度给文字更多空间 */
+    top: 0;
+    left:10%;
+    right:10%;
+    /*transform: translateY(-50%);  /* 自身向上移动自身高度的 50%，实现垂直居中 */
+    height: 15%;
+    width: 80%; /* 增加宽度给文字更多空间 */
     box-sizing: border-box; /* 确保padding包含在width内 */
-    z-index: 0;
+    z-index: 3;
 }
 
 nav ul {
@@ -78,15 +77,12 @@ nav ul {
     padding: 0;
 }
 
-nav ul li {
+/* nav中的超链接 */
+nav ul a {
     font-family: 'zpix';
     font-size: 24px;
     margin-bottom: 5px;
     color: black;
-}
-
-/* nav中的超链接 */
-nav ul li a {
     color:#000000;
     text-decoration: none;
     display: inline-block; /* 使链接可设置宽度 */
@@ -94,14 +90,14 @@ nav ul li a {
     word-break: keep-all; /* 保持单词完整 */
 }
 
-nav ul li a:hover {
+nav ul a:hover {
     color: #00ffd5;
     background-color: #000000;
 }
 
-nav ul footer {
+nav footer {
     font-size: 12px;
-    text-align: left;
+    text-align: right;
     bottom: 0;
 }
 
@@ -120,7 +116,7 @@ nav ul footer {
   user-select: text;     /* 确保文字可选 */
 }
 
-.title {
+#title {
     font-family: 'zpix';
     font-size: 24px;
     color:#000000;
@@ -128,6 +124,23 @@ nav ul footer {
     text-decoration: none;
 }
 
+.navhead{
+    top:0;
+    z-index: 10;
+}
+
+.navbody{
+    z-index: 9;
+    position: fixed;
+    top: 5%;
+    right: 30%;
+    text-align: center;
+}
+
+.navfoot{
+    text-align: right;
+    z-index: 12;
+}
 .contact {
     color: #000000;
     text-decoration: none;
