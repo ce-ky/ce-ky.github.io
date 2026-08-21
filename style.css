@@ -2,7 +2,7 @@
 @font-face {
     font-family: 'Monaspace Neon';
     src: url('fonts/MonaspaceNeon-Light.otf') format('opentype');
-    font-weight: normal;
+    font-weight: 30;
     font-style: normal;
 }
 
@@ -22,9 +22,6 @@
     box-sizing: border-box; /* padding/border count inside width/height */
     margin: 0;
     padding: 0;
-    /* keep the crisp pixel-font edges, don't let the browser smooth them */
-    -webkit-font-smoothing: none;
-    image-rendering: pixelated;
 }
 
 body {
