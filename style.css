@@ -1,40 +1,44 @@
+/* ---------- Fonts ---------- */
 @font-face {
     font-family: 'Monaspace Neon';
     src: url('fonts/MonaspaceNeon-Light.otf') format('opentype');
-    font-weight: 30;
+    font-weight: normal;
     font-style: normal;
 }
 
-@font-face{
-    font-family:'ApricotXenC';
+@font-face {
+    font-family: 'ApricotXenC';
     src: url('fonts/Web437_Tandy2K.woff') format('woff');
 }
-@font-face{
-    font-family:'zpix';
+
+@font-face {
+    font-family: 'zpix';
     src: url('fonts/zpix.ttf') format('truetype');
 }
 
-*{
+/* ---------- Base ---------- */
+* {
     font-family: 'zpix';
-    box-sizing: border-box; /* 确保padding和border包含在width和height内 */
+    box-sizing: border-box; /* padding/border count inside width/height */
     margin: 0;
-    padding: 0; 
+    padding: 0;
+    /* keep the crisp pixel-font edges, don't let the browser smooth them */
+    -webkit-font-smoothing: none;
+    image-rendering: pixelated;
 }
 
-body{
+body {
     padding: 0;
 }
 
-img{
-    align-content: middle; /* 图片垂直居中 */
-    width: auto !important;       /* 不强制拉伸到容器宽度 */
-    height: auto !important;      /* 保持原始高度 */
-    max-width: none !important;   /* 取消“最大宽度 100%”的响应式缩放 */
-    max-height: none !important;  /* 取消“最大高度 100%”的限制 */
+/* Images scale down to fit their container instead of overflowing. */
+img {
+    max-width: 100%;
+    height: auto;
 }
 
-body p{
-    font-family:'zpix';
+body p {
+    font-family: 'zpix';
     color: #000000;
     margin: 0;
     padding: 0;
@@ -42,7 +46,7 @@ body p{
 
 main {
     z-index: 1;
-    font-family: 'ApricotXenC','zpix';
+    font-family: 'ApricotXenC', 'zpix';
     margin: 0;
 }
 
@@ -52,22 +56,21 @@ a {
     text-underline-offset: 5px;
 }
 
-
 section {
     font-size: 12px;
 }
 
+/* ---------- Navigation ---------- */
 nav {
     background-color: #00ce89ea;
-    padding: 10px; /* 减少内边距 */
+    padding: 10px;
     position: fixed;
     top: 0;
-    left:10%;
-    right:10%;
-    /*transform: translateY(-50%);  /* 自身向上移动自身高度的 50%，实现垂直居中 */
+    left: 10%;
+    right: 10%;
     height: 15%;
-    width: 80%; /* 增加宽度给文字更多空间 */
-    box-sizing: border-box; /* 确保padding包含在width内 */
+    width: 80%;
+    box-sizing: border-box;
     z-index: 3;
 }
 
@@ -77,17 +80,15 @@ nav ul {
     padding: 0;
 }
 
-/* nav中的超链接 */
 nav ul a {
     font-family: 'zpix';
     font-size: 24px;
     margin-bottom: 5px;
-    color: black;
-    color:#000000;
+    color: #000000;
     text-decoration: none;
-    display: inline-block; /* 使链接可设置宽度 */
-    white-space: nowrap; /* 防止文字换行 */
-    word-break: keep-all; /* 保持单词完整 */
+    display: inline-block;
+    white-space: nowrap;  /* don't wrap menu labels mid-word */
+    word-break: keep-all;
 }
 
 nav ul a:hover {
@@ -101,35 +102,36 @@ nav footer {
     bottom: 0;
 }
 
-.content{
+/* ---------- Main content ---------- */
+.content {
     font-size: 12px;
     margin-top: 200px;
-    margin-left: 35%; /* 调整以匹配新的导航栏宽度 */
+    margin-left: 35%;
     padding: 20px;
     position: relative;
     z-index: 2;
-    pointer-events: none;  /* 本身对事件（包括文字选取）全透明 */
+    pointer-events: none;  /* let clicks fall through to the background */
 }
 
 .content * {
-  pointer-events: auto;  /* 允许文字选取、点击等 */
-  user-select: text;     /* 确保文字可选 */
+    pointer-events: auto;  /* except the text itself, which stays selectable */
+    user-select: text;
 }
 
 #title {
     font-family: 'zpix';
     font-size: 24px;
-    color:#000000;
-    font-weight:lighter;
+    color: #000000;
+    font-weight: lighter;
     text-decoration: none;
 }
 
-.navhead{
-    top:0;
+.navhead {
+    top: 0;
     z-index: 10;
 }
 
-.navbody{
+.navbody {
     z-index: 9;
     position: fixed;
     top: 5%;
@@ -137,15 +139,16 @@ nav footer {
     text-align: center;
 }
 
-.navfoot{
+.navfoot {
     text-align: right;
     z-index: 12;
 }
+
 .contact {
     color: #000000;
     text-decoration: none;
     font-size: 12px;
-    text-align:center;
+    text-align: center;
 }
 
 .contact-href {
@@ -159,3 +162,40 @@ nav footer {
     background-color: #000000;
 }
 
+/* ---------- Mobile / narrow screens ----------
+   The desktop layout is a fixed nav band with the content pushed to the
+   right. On a phone that overlaps and clips, so below 768px everything
+   stacks into one normal column. Look and fonts stay the same. */
+@media (max-width: 768px) {
+    nav {
+        position: static;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: auto;
+    }
+
+    .navbody {
+        position: static;
+        right: auto;
+        top: auto;
+        text-align: left;
+        margin: 10px 0;
+    }
+
+    .navbody a {
+        display: block;      /* one menu item per line, easier to tap */
+        margin-bottom: 8px;
+    }
+
+    .navfoot {
+        text-align: left;
+    }
+
+    .content,
+    main.content {
+        margin-top: 20px;
+        margin-left: 0;
+        padding: 16px;
+    }
+}
