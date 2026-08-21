@@ -1,29 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>尺原 Ceky</title>
+    <link rel="icon" href="/favicon.ico">
 
-    <!-- Make sure the CSS path is correct -->
     <link rel="stylesheet" href="/style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    
-    <!-- Font preload for better loading -->
-    <link rel="preload" href="fonts/MonaspaceNeon-Light.otf" as="font" type="font/otf" crossorigin>
-    </head>
-      <header>
+
+    <!-- Preload the primary pixel font so text doesn't flash on load -->
+    <link rel="preload" href="/fonts/zpix.ttf" as="font" type="font/ttf" crossorigin>
+  </head>
+  <body>
+    <header>
       <!-- Navigation bar container -->
       <div id="navbar"></div>
-    </header> 
-    <body>
-    <!-- Bootstrap scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-        <p> testtest</p>
+    </header>
+
+    <main class="content">
+      <p>testtest</p>
+    </main>
+
     <script>
-      // Load navigation using Fetch API
+      // Load the shared navigation bar
       fetch('/navbar.html')
         .then(response => response.text())
         .then(data => {
@@ -31,5 +30,5 @@
         })
         .catch(error => console.error('Error loading navigation:', error));
     </script>
-    </body>
+  </body>
 </html>
