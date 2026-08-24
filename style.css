@@ -57,18 +57,20 @@ section {
     font-size: 12px;
 }
 
-/* ---------- Navigation ---------- */
+/* ---------- Navigation ----------
+   A vertical green column pinned to the right edge, full height.
+   Menu / social / email stack top-to-bottom inside it. */
 nav {
     background-color: #00ce89ea;
     padding: 10px;
     position: fixed;
     top: 0;
-    left: 10%;
-    right: 10%;
-    height: 15%;
-    width: 80%;
+    right: 0;
+    height: 100%;
+    width: 240px;
     box-sizing: border-box;
     z-index: 3;
+    overflow-y: auto;  /* scroll inside the column if it ever gets tall */
 }
 
 nav ul {
@@ -102,8 +104,9 @@ nav footer {
 /* ---------- Main content ---------- */
 .content {
     font-size: 12px;
-    margin-top: 200px;
-    margin-left: 35%;
+    margin-top: 20px;
+    margin-left: 20px;
+    margin-right: 260px;  /* clear the 240px right-side nav + a little gap */
     padding: 20px;
     position: relative;
     z-index: 2;
@@ -130,14 +133,18 @@ nav footer {
 
 .navbody {
     z-index: 9;
-    position: fixed;
-    top: 5%;
-    right: 30%;
-    text-align: center;
+    text-align: left;
+    margin: 20px 0;
+}
+
+/* stack the menu links vertically inside the column */
+.navbody a {
+    display: block;
+    margin-bottom: 8px;
 }
 
 .navfoot {
-    text-align: right;
+    text-align: left;
     z-index: 12;
 }
 
@@ -160,9 +167,10 @@ nav footer {
 }
 
 /* ---------- Mobile / narrow screens ----------
-   The desktop layout is a fixed nav band with the content pushed to the
-   right. On a phone that overlaps and clips, so below 768px everything
-   stacks into one normal column. Look and fonts stay the same. */
+   The desktop layout is a fixed nav column on the right with the content
+   on the left. On a phone that column would eat the screen, so below
+   768px everything stacks into one normal column. Look and fonts stay
+   the same. */
 @media (max-width: 768px) {
     nav {
         position: static;
@@ -193,6 +201,7 @@ nav footer {
     main.content {
         margin-top: 20px;
         margin-left: 0;
+        margin-right: 0;
         padding: 16px;
     }
 }
