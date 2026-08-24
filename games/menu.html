@@ -1,25 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-    <script>
-		document.addEventListener('DOMContentLoaded', function(){
-			let input = document.querySelector('input');
-			input.addEventListener('keyup', function(event){
-				let name = document.querySelector('p');
-				if (input.value){
-					name.innerHTML = `hello, ${input.value}`;
-				}else{
-					name.innerHTML = 'hello, whoever you are';
-				}
-			});
-		});
-    </script>
-    </head>
-<body>
-<form>
-	<input autocomplete="off" autofocus placeholder='name' id='name'>
-</form>
-<p></p>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>尺原 Ceky</title>
+    <link rel="icon" href="/favicon.ico">
 
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- Preload the primary pixel font so text doesn't flash on load -->
+    <link rel="preload" href="/fonts/zpix.ttf" as="font" type="font/ttf" crossorigin>
+  </head>
+  <body>
+    <header>
+      <!-- Navigation bar container -->
+      <div id="navbar"></div>
+    </header>
+
+    <main class="content">
+      <p>Demo: Submerged</p>
+      <p><a href="submerged.html">Details</a></p>
+      <hr>
+
+      <p>Game Jam: GGJ 2024</p>
+      <p><a target="_blank" href="https://dabu-10.itch.io/pretending">itch.io</a></p>
+      <hr>
+
+      <p>Game Jam: GGJ 2023</p>
+      <hr>
+
+      <p>Practice: SleepTalk</p>
+      <p><a target="_blank" href="https://cyseki.itch.io/sleeptalk">itch.io</a></p>
+      <hr>
+
+      <p>Practice: Moth</p>
+      <p><a target="_blank" href="https://cyseki.itch.io/moth">itch.io</a></p>
+      <hr>
+
+      <p>Practice: Architecture Student Simulator</p>
+      <hr>
+    </main>
+
+    <script>
+      // Load the shared navigation bar
+      fetch('/navbar.html')
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('navbar').innerHTML = data;
+        })
+        .catch(error => console.error('Error loading navigation:', error));
+    </script>
+  </body>
 </html>
