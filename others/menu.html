@@ -18,10 +18,7 @@
     </header>
 
     <main class="content">
-      <form>
-        <input autocomplete="off" autofocus placeholder="name" id="name">
-      </form>
-      <p></p>
+      <p>Other Stuffs</p>
     </main>
 
     <script>
@@ -32,19 +29,6 @@
           document.getElementById('navbar').innerHTML = data;
         })
         .catch(error => console.error('Error loading navigation:', error));
-    </script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        let input = document.querySelector('#name');
-        input.addEventListener('keyup', function () {
-          let name = document.querySelector('main.content p');
-          if (input.value) {
-            name.innerHTML = `hello, ${input.value}`;
-          } else {
-            name.innerHTML = 'hello, whoever you are';
-          }
-        });
-      });
     </script>
   </body>
 </html>
