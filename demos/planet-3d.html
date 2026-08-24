@@ -11,7 +11,8 @@
 
     <style>
       #planet-canvas { width: 480px; height: 480px; max-width: 100%; }
-      #planet-canvas canvas { display: block; }
+      #planet-canvas canvas { display: block; cursor: grab; touch-action: none; }
+      #planet-canvas canvas:active { cursor: grabbing; }
     </style>
 
     <script type="importmap">
@@ -26,6 +27,7 @@
     <main class="content">
       <p>Planet demo — 3D (three.js)</p>
       <p><a href="planet-2d.html">Switch to 2D version</a> · <a href="/index.html">Back to home</a></p>
+      <p>Spins on Z by default — drag with the mouse to tilt it on X/Y.</p>
       <div id="planet-canvas"></div>
     </main>
 
@@ -104,24 +106,59 @@
       const geo = new THREE.SphereGeometry(2, 64, 64);
       const mat = new THREE.MeshStandardMaterial({ map: makeTexture(), roughness: 0.9 });
       const planet = new THREE.Mesh(geo, mat);
-      scene.add(planet);
 
       // cheap atmosphere glow: a larger back-facing sphere, additive-ish
       const glow = new THREE.Mesh(
         new THREE.SphereGeometry(2.12, 64, 64),
         new THREE.MeshBasicMaterial({ color: 0x00ffaa, transparent: true, opacity: 0.18, side: THREE.BackSide })
       );
-      scene.add(glow);
+
+      // Group them so the idle spin and the drag-tilt rotate both meshes
+      // together around the same pivot.
+      const globe = new THREE.Group();
+      globe.add(planet, glow);
+      scene.add(globe);
 
       scene.add(new THREE.AmbientLight(0xffffff, 0.35));
       const sun = new THREE.DirectionalLight(0xffffff, 1.1);
       sun.position.set(4, 2, 5);
       scene.add(sun);
 
+      // Default motion: spin on Z. Dragging tilts it on X/Y on top of that
+      // — the Z spin never stops, drag just adds X/Y rotation.
+      const Z_SPIN_SPEED = 0.0035;
+      const DRAG_SENSITIVITY = 0.008;
+
+      let dragging = false;
+      let lastX = 0;
+      let lastY = 0;
+
+      renderer.domElement.addEventListener('pointerdown', (e) => {
+        dragging = true;
+        lastX = e.clientX;
+        lastY = e.clientY;
+        renderer.domElement.setPointerCapture(e.pointerId);
+      });
+
+      renderer.domElement.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        const dx = e.clientX - lastX;
+        const dy = e.clientY - lastY;
+        lastX = e.clientX;
+        lastY = e.clientY;
+        globe.rotation.y += dx * DRAG_SENSITIVITY;
+        globe.rotation.x += dy * DRAG_SENSITIVITY;
+      });
+
+      renderer.domElement.addEventListener('pointerup', (e) => {
+        dragging = false;
+        renderer.domElement.releasePointerCapture(e.pointerId);
+      });
+      renderer.domElement.addEventListener('pointercancel', () => { dragging = false; });
+
       function animate() {
         requestAnimationFrame(animate);
-        planet.rotation.y += 0.0025;
-        glow.rotation.y += 0.0025;
+        globe.rotation.z += Z_SPIN_SPEED;
         renderer.render(scene, camera);
       }
       animate();
