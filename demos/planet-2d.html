@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>尺原 Ceky — Planet demo (2D / p5.js)</title>
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preload" href="/fonts/zpix.ttf" as="font" type="font/ttf" crossorigin>
+
+    <script src="/libs/p5.min.js"></script>
+  </head>
+  <body>
+    <header>
+      <div id="navbar"></div>
+    </header>
+
+    <main class="content">
+      <p>Planet demo — 2D (p5.js)</p>
+      <p><a href="planet-3d.html">Switch to 3D version</a> · <a href="/index.html">Back to home</a></p>
+      <div id="planet-canvas"></div>
+    </main>
+
+    <script>
+      fetch('/navbar.html')
+        .then(response => response.text())
+        .then(data => { document.getElementById('navbar').innerHTML = data; })
+        .catch(error => console.error('Error loading navigation:', error));
+    </script>
+
+    <script>
+      const sketch = function (p) {
+        const SIZE = 480;
+        const RADIUS = 160;
+        const CELL = 5;
+        let craters = [];
+
+        // same 5-tone palette used by the 3D demo, for a fair comparison
+        const PALETTE = [
+          [4, 36, 34],
+          [10, 78, 68],
+          [22, 140, 108],
+          [64, 214, 160],
+          [176, 255, 224]
+        ];
+
+        p.setup = function () {
+          const cnv = p.createCanvas(SIZE, SIZE);
+          cnv.parent('planet-canvas');
+          p.pixelDensity(1);
+          p.noStroke();
+          p.randomSeed(7);
+          for (let i = 0; i < 10; i++) {
+            const ang = p.random(p.TWO_PI);
+            const r = p.random(RADIUS * 0.15, RADIUS * 0.85);
+            craters.push({ x: r * p.cos(ang), y: r * p.sin(ang), r: p.random(6, 22) });
+          }
+        };
+
+        p.draw = function () {
+          p.clear();
+          p.push();
+          p.translate(SIZE / 2, SIZE / 2);
+
+          // soft atmosphere glow
+          p.noFill();
+          for (let g = 6; g > 0; g--) {
+            p.stroke(0, 255, 170, 10);
+            p.strokeWeight(g * 2);
+            p.circle(0, 0, RADIUS * 2 + g * 6);
+          }
+
+          const t = p.frameCount * 0.004;
+          for (let y = -RADIUS; y <= RADIUS; y += CELL) {
+            for (let x = -RADIUS; x <= RADIUS; x += CELL) {
+              const d = p.sqrt(x * x + y * y);
+              if (d > RADIUS) continue;
+
+              const n = p.noise((x + 1000) * 0.02 + t * 8, (y + 1000) * 0.02);
+              const light = p.constrain(p.map(-x - y, -RADIUS * 1.4, RADIUS * 1.4, 1, 0), 0, 1);
+              let shade = n * 0.6 + light * 0.4;
+
+              let craterDark = 0;
+              for (const c of craters) {
+                const cd = p.dist(x, y, c.x, c.y);
+                if (cd < c.r) craterDark = p.max(craterDark, p.map(cd, 0, c.r, 0.35, 0));
+              }
+              shade -= craterDark;
+
+              let col;
+              if (shade > 0.72) col = PALETTE[4];
+              else if (shade > 0.52) col = PALETTE[3];
+              else if (shade > 0.32) col = PALETTE[2];
+              else if (shade > 0.14) col = PALETTE[1];
+              else col = PALETTE[0];
+
+              p.fill(col[0], col[1], col[2]);
+              p.rect(x, y, CELL, CELL);
+            }
+          }
+          p.pop();
+        };
+      };
+
+      new p5(sketch);
+    </script>
+  </body>
+</html>

@@ -58,14 +58,14 @@ section {
 }
 
 /* ---------- Navigation ----------
-   A vertical green column pinned to the right edge, full height.
-   Menu / social / email stack top-to-bottom inside it. */
+   A vertical column pinned to the left edge, full height, transparent
+   background. Menu / social / email stack top-to-bottom inside it. */
 nav {
-    background-color: #00ce89ea;
+    background-color: transparent;
     padding: 10px;
     position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     height: 100%;
     width: 240px;
     box-sizing: border-box;
@@ -105,8 +105,8 @@ nav footer {
 .content {
     font-size: 12px;
     margin-top: 20px;
-    margin-left: 20px;
-    margin-right: 260px;  /* clear the 240px right-side nav + a little gap */
+    margin-left: 260px;  /* clear the 240px left-side nav + a little gap */
+    margin-right: 20px;
     padding: 20px;
     position: relative;
     z-index: 2;

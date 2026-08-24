@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>尺原 Ceky — Planet demo (3D / three.js)</title>
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="/style.css">
+    <link rel="preload" href="/fonts/zpix.ttf" as="font" type="font/ttf" crossorigin>
+
+    <style>
+      #planet-canvas { width: 480px; height: 480px; max-width: 100%; }
+      #planet-canvas canvas { display: block; }
+    </style>
+
+    <script type="importmap">
+      { "imports": { "three": "/libs/three.module.js" } }
+    </script>
+  </head>
+  <body>
+    <header>
+      <div id="navbar"></div>
+    </header>
+
+    <main class="content">
+      <p>Planet demo — 3D (three.js)</p>
+      <p><a href="planet-2d.html">Switch to 2D version</a> · <a href="/index.html">Back to home</a></p>
+      <div id="planet-canvas"></div>
+    </main>
+
+    <script>
+      fetch('/navbar.html')
+        .then(response => response.text())
+        .then(data => { document.getElementById('navbar').innerHTML = data; })
+        .catch(error => console.error('Error loading navigation:', error));
+    </script>
+
+    <script type="module">
+      import * as THREE from 'three';
+
+      const container = document.getElementById('planet-canvas');
+      const width = container.clientWidth || 480;
+      const height = container.clientHeight || 480;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+      camera.position.set(0, 0, 6);
+
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      container.appendChild(renderer.domElement);
+
+      // Procedural planet texture, same 5-tone palette as the 2D demo,
+      // generated on a canvas so no image assets are needed.
+      function makeTexture() {
+        const c = document.createElement('canvas');
+        c.width = 512;
+        c.height = 256;
+        const ctx = c.getContext('2d');
+        const img = ctx.createImageData(c.width, c.height);
+
+        function hash(x, y) {
+          const s = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
+          return s - Math.floor(s);
+        }
+        function smoothNoise(x, y, scale) {
+          let v = 0, amp = 1, total = 0;
+          for (let o = 0; o < 4; o++) {
+            const f = scale * Math.pow(2, o);
+            const n = hash(Math.floor(x * f), Math.floor(y * f));
+            v += n * amp;
+            total += amp;
+            amp *= 0.5;
+          }
+          return v / total;
+        }
+
+        const palette = [
+          [4, 36, 34], [10, 78, 68], [22, 140, 108], [64, 214, 160], [176, 255, 224]
+        ];
+        for (let y = 0; y < c.height; y++) {
+          for (let x = 0; x < c.width; x++) {
+            const n = smoothNoise(x, y, 0.02);
+            const col = n > 0.62 ? palette[4]
+              : n > 0.48 ? palette[3]
+              : n > 0.32 ? palette[2]
+              : n > 0.18 ? palette[1]
+              : palette[0];
+            const i = (y * c.width + x) * 4;
+            img.data[i] = col[0];
+            img.data[i + 1] = col[1];
+            img.data[i + 2] = col[2];
+            img.data[i + 3] = 255;
+          }
+        }
+        ctx.putImageData(img, 0, 0);
+        const tex = new THREE.CanvasTexture(c);
+        tex.needsUpdate = true;
+        return tex;
+      }
+
+      const geo = new THREE.SphereGeometry(2, 64, 64);
+      const mat = new THREE.MeshStandardMaterial({ map: makeTexture(), roughness: 0.9 });
+      const planet = new THREE.Mesh(geo, mat);
+      scene.add(planet);
+
+      // cheap atmosphere glow: a larger back-facing sphere, additive-ish
+      const glow = new THREE.Mesh(
+        new THREE.SphereGeometry(2.12, 64, 64),
+        new THREE.MeshBasicMaterial({ color: 0x00ffaa, transparent: true, opacity: 0.18, side: THREE.BackSide })
+      );
+      scene.add(glow);
+
+      scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+      const sun = new THREE.DirectionalLight(0xffffff, 1.1);
+      sun.position.set(4, 2, 5);
+      scene.add(sun);
+
+      function animate() {
+        requestAnimationFrame(animate);
+        planet.rotation.y += 0.0025;
+        glow.rotation.y += 0.0025;
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        const w = container.clientWidth, h = container.clientHeight;
+        camera.aspect = w / h;
+        camera.updateProjectionMatrix();
+        renderer.setSize(w, h);
+      });
+    </script>
+  </body>
+</html>
