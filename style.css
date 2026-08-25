@@ -16,6 +16,11 @@
     src: url('fonts/zpix.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'Fusion Pixel 8px SC';
+    src: url('fonts/FusionPixel8pxProportionalSC.woff2') format('woff2');
+}
+
 /* ---------- Base ---------- */
 * {
     font-family: 'zpix';
@@ -54,7 +59,8 @@ a {
 }
 
 section {
-    font-size: 24px;
+    font-family: 'Fusion Pixel 8px SC', 'zpix';
+    font-size: 16px;
     line-height: 1.5;
 }
 
@@ -104,7 +110,7 @@ nav footer {
 
 /* ---------- Main content ---------- */
 .content {
-    font-size: 24px;
+    font-size: 16px;
     line-height: 1.5;
     margin-top: 20px;
     margin-left: 260px;  /* clear the 240px left-side nav + a little gap */
@@ -113,6 +119,10 @@ nav footer {
     position: relative;
     z-index: 2;
     pointer-events: none;  /* let clicks fall through to the background */
+}
+
+.content, .content p {
+    font-family: 'Fusion Pixel 8px SC', 'zpix';
 }
 
 .content * {
