@@ -29,18 +29,14 @@ collections:
 
   - name: "drawings"
     label: "画 Drawings"
-    description: "画作条目，显示在 Drawings 页"
+    description: "画作条目，以瀑布流展示在 Drawings 页；没有单独的详情页，点击缩略图会直接弹窗展示这张图的原图"
     folder: "_drawings"
     create: true
     slug: "{{slug}}"
     fields:
-      - { label: "标题 Title", name: "title", widget: "string" }
-      - { label: "封面图 Cover", name: "cover", widget: "image", required: false }
-      - { label: "链接 Link", name: "link", widget: "string", required: false, hint: "留空则自动生成这条内容自己的详情页（用下面的正文）" }
-      - { label: "链接文字 Link label", name: "link_label", widget: "string", required: false, default: "Details" }
-      - { label: "新窗口打开 Open in new tab", name: "external", widget: "boolean", required: false, default: false }
+      - { label: "标题 Title", name: "title", widget: "string", hint: "会作为图片的 alt 文字和弹窗下方的说明" }
+      - { label: "图片 Image", name: "cover", widget: "image", required: true, hint: "瀑布流缩略图和点击后弹窗大图用的是同一张图，建议直接上传原图（不要提前裁剪/压缩），保证弹窗清晰" }
       - { label: "日期 Date", name: "date", widget: "datetime", required: false }
-      - { label: "正文 Body", name: "body", widget: "markdown", required: false }
 
   - name: "other"
     label: "其他工作 Other"

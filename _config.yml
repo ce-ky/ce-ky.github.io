@@ -14,8 +14,10 @@ collections:
     output: true
     permalink: /games/:path.html
   drawings:
-    output: true
-    permalink: /drawings/:path.html
+    # Drawings display as a waterfall gallery on drawings/menu.html with a
+    # click-to-enlarge modal (see _layouts/collection-list.html) — there's
+    # no per-drawing detail page to link to, so skip generating one.
+    output: false
   other:
     output: true
     permalink: /others/:path.html
@@ -31,11 +33,6 @@ defaults:
   - scope:
       path: ""
       type: projects
-    values:
-      layout: entry
-  - scope:
-      path: ""
-      type: drawings
     values:
       layout: entry
   - scope:
