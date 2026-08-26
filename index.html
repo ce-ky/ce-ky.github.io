@@ -41,15 +41,7 @@
       </section>
     </main>
 
-    <script>
-      // Load the shared navigation bar
-      fetch('navbar.html')
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('navbar').innerHTML = data;
-        })
-        .catch(error => console.error('Error loading navigation:', error));
-    </script>
+    <script src="/nav.js"></script>
     <script>
       document.querySelector('form').addEventListener('submit', function (event) {
         event.preventDefault();
