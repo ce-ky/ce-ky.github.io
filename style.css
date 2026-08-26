@@ -148,6 +148,48 @@ nav footer {
     padding: 16px;
 }
 
+/* List/grid layout toggle: two small buttons pinned to the content's
+   top-right corner, matching the site's hover-inverts-to-black style. */
+.layout-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 6px;
+    z-index: 5;
+}
+
+.layout-toggle button {
+    font-family: 'zpix';
+    font-size: 12px;
+    line-height: 1;
+    border: 1px solid #000000;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 4px 10px;
+    cursor: pointer;
+}
+
+.layout-toggle button:hover {
+    background-color: #000000;
+    color: #00ffd5;
+}
+
+.layout-toggle button.active {
+    background-color: #000000;
+    color: #00ffaa;
+}
+
+.content[data-layout="grid"] .layout-list,
+.content[data-layout="list"] .layout-grid {
+    display: none;
+}
+
+.layout-list,
+.layout-grid {
+    margin-top: 40px;  /* clear the .layout-toggle pinned to the top-right corner */
+}
+
 #title {
     font-family: 'zpix';
     font-size: 24px;
