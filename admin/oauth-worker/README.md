@@ -20,26 +20,45 @@ is that piece. It's small, free to run, and only needs to be set up once.
 
 ## 2. Deploy the Worker on Cloudflare (free tier)
 
+There are two ways to get `worker.js` running on Cloudflare. Pick one.
+
+### 2a. Connect the repo to Cloudflare (auto-deploys on every push)
+
 1. Sign up / log in at <https://dash.cloudflare.com> (free account, no credit
    card needed for the Workers free tier).
-2. **Workers & Pages** → **Create** → **Create Worker**. Give it a name (e.g.
-   `ceky-cms-auth`) → **Deploy** (deploys a placeholder first, that's fine).
-3. **Edit code**, delete the placeholder, paste in the contents of
-   `worker.js` from this folder → **Deploy**.
-4. Back on the worker's page, go to **Settings** → **Variables and Secrets**
-   → **Add**:
+2. **Workers & Pages** → **Create** → **Workers** → **Import a repository**
+   (sometimes labeled "Deploy from Git" / "Workers Builds"), and connect
+   this GitHub repo.
+3. Cloudflare reads `wrangler.toml` at the repo root — it already points at
+   `admin/oauth-worker/worker.js`, so leave the build settings as default
+   (root directory `/`, no build command needed).
+4. Once the first deploy finishes, go to the worker's page → **Settings**
+   → **Variables and Secrets** → **Add**:
    - `GITHUB_CLIENT_ID` = the Client ID from step 1
    - `GITHUB_CLIENT_SECRET` = the Client Secret from step 1 (mark it as a
-     **secret**, not a plain text variable)
-5. Save. Note the worker's URL, shown at the top of its page:
-   `https://<your-worker-name>.<your-subdomain>.workers.dev`
+     **secret**, not a plain text variable), then **Deploy** again so the
+     new variables take effect.
+5. Note the worker's URL, shown at the top of its page:
+   `https://<your-worker-name>.<your-subdomain>.workers.dev`. Every future
+   push to this repo redeploys the worker automatically — a failed build
+   shows up as a "Workers Builds" check on the pull request.
+
+### 2b. Or: paste the code in manually (no git connection)
+
+1. Sign up / log in at <https://dash.cloudflare.com>.
+2. **Workers & Pages** → **Create** → **Create Worker**. Give it a name →
+   **Deploy** (deploys a placeholder first, that's fine).
+3. **Edit code**, delete the placeholder, paste in the contents of
+   `worker.js` from this folder → **Deploy**.
+4. Same **Variables and Secrets** step as 2a.4 above.
+5. Same as 2a.5 — note the worker's URL.
 
 ## 3. Wire everything together
 
 1. Go back to the GitHub OAuth App from step 1 and set its **Authorization
    callback URL** to `<worker-url>/callback`.
 2. Edit `admin/config.yml` in this repo: set `backend.base_url` to the
-   worker URL from step 2.4 (no trailing slash). Commit and push.
+   worker URL from step 2a.5/2b.5 (no trailing slash). Commit and push.
 
 ## 4. Try it
 

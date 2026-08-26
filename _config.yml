@@ -64,3 +64,4 @@ exclude:
   - README.md
   - CONTENT.md
   - admin/oauth-worker
+  - wrangler.toml

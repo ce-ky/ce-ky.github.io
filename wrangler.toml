@@ -1,0 +1,3 @@
+name = "ce-ky-github-io"
+main = "admin/oauth-worker/worker.js"
+compatibility_date = "2026-08-26"
