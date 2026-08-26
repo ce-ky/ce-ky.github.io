@@ -249,6 +249,100 @@ nav footer {
     background-color: #000000;
 }
 
+/* ---------- Drawings waterfall ----------
+   Pinterest-style masonry: drawing-waterfall.js splits the items into
+   1/2/3 equal-width flex columns depending on viewport width, and each
+   column stacks its images top to bottom so every image keeps its own
+   height (driven by its natural aspect ratio). Deliberately not CSS
+   multi-column (column-count) — Blink mishandles paint order between a
+   multicol container's fragments and a later translucent position:fixed
+   sibling (the lightbox below), letting the columned images show through
+   on top of the modal overlay.
+   Before JS runs (or if it's disabled), items are direct children of
+   .drawing-waterfall and just wrap in a plain flex grid instead of true
+   masonry — still readable, just not height-packed. */
+.drawing-waterfall {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 16px;
+    margin-top: 20px;
+}
+
+.drawing-waterfall.js-columns {
+    flex-wrap: nowrap;
+}
+
+.drawing-column {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 0;
+    min-width: 0;
+    gap: 16px;
+}
+
+.drawing-item {
+    flex: 1 1 260px;
+    margin: 0;
+    cursor: zoom-in;
+}
+
+.drawing-column .drawing-item {
+    flex: none;
+}
+
+.drawing-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* Full-image lightbox opened on click. Hidden via the `hidden` attribute
+   until JS toggles it. */
+.drawing-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    cursor: zoom-out;
+}
+
+.drawing-modal[hidden] {
+    display: none;
+}
+
+.drawing-modal-img {
+    max-width: 100%;
+    max-height: calc(100vh - 120px);
+    width: auto;
+    height: auto;
+    cursor: default;
+}
+
+.drawing-modal-caption {
+    color: #ffffff;
+    margin-top: 12px;
+    text-align: center;
+}
+
+.drawing-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-family: 'zpix';
+    font-size: 28px;
+    line-height: 1;
+    color: #ffffff;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
 /* ---------- Mobile / narrow screens ----------
    The desktop layout is a fixed nav column on the right with the content
    on the left. On a phone that column would eat the screen, so below

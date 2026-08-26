@@ -1,13 +1,41 @@
 ---
 layout: default
 ---
+{% assign items = site[page.collection_key] %}
+
+{% if page.collection_key == "drawings" %}
+<main class="content">
+  <div class="drawing-waterfall" id="drawing-waterfall">
+    {% for item in items %}
+      {% if item.cover %}
+        <figure class="drawing-item">
+          <img src="{{ item.cover }}"
+               alt="{{ item.title }}"
+               loading="lazy"
+               data-full="{{ item.cover }}"
+               data-caption="{{ item.title | escape }}">
+        </figure>
+      {% endif %}
+    {% endfor %}
+  </div>
+</main>
+
+<!-- Lives outside main.content: that element is a stacking context (it
+     sets z-index), which would otherwise trap the modal below the fixed
+     nav sidebar regardless of the modal's own z-index. -->
+<div class="drawing-modal" id="drawing-modal" hidden>
+  <button type="button" class="drawing-modal-close" aria-label="Close">&times;</button>
+  <img class="drawing-modal-img" src="" alt="">
+  <p class="drawing-modal-caption"></p>
+</div>
+
+<script src="/drawing-waterfall.js" defer></script>
+{% else %}
 <main class="content" data-layout="grid">
   <div class="layout-toggle" role="group" aria-label="Layout">
     <button type="button" data-layout-btn="list">List</button>
     <button type="button" data-layout-btn="grid">Grid</button>
   </div>
-
-  {% assign items = site[page.collection_key] %}
 
   <div class="layout-list">
     {% for item in items %}
@@ -30,3 +58,4 @@ layout: default
 </main>
 
 <script src="/layout-toggle.js" data-storage-key="{{ page.collection_key }}Layout" defer></script>
+{% endif %}
