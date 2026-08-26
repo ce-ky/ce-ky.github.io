@@ -68,10 +68,13 @@ nav {
     top: 0;
     left: 0;
     height: 100%;
-    width: 240px;
+    width: 200px;
     box-sizing: border-box;
     z-index: 3;
     overflow-y: auto;  /* scroll inside the column if it ever gets tall */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;  /* center the nav content block vertically */
 }
 
 nav ul {
@@ -107,7 +110,7 @@ nav footer {
     font-size: 24px;
     line-height: 1.5;
     margin-top: 20px;
-    margin-left: 260px;  /* clear the 240px left-side nav + a little gap */
+    margin-left: 220px;  /* clear the 200px left-side nav + a little gap */
     margin-right: 20px;
     padding: 20px;
     position: relative;
@@ -118,6 +121,31 @@ nav footer {
 .content * {
     pointer-events: auto;  /* except the text itself, which stays selectable */
     user-select: text;
+}
+
+/* Flowing text that reflows into 1/2/3 columns depending on how much
+   width is available, like a newspaper. */
+.prose {
+    column-width: 420px;
+    column-gap: 40px;
+}
+
+.prose p {
+    break-inside: avoid;
+}
+
+/* Responsive grid of cards, e.g. for game/drawing listings. Fits as many
+   ~260px cards per row as the available width allows (1 on narrow
+   screens, more as the window widens). */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    border: 1px solid #000000;
+    padding: 16px;
 }
 
 #title {
