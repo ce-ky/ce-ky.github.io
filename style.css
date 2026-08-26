@@ -54,7 +54,7 @@ a {
 }
 
 section {
-    font-size: 24px;
+    font-size: 12px;
     line-height: 1.5;
 }
 
@@ -107,7 +107,7 @@ nav footer {
 
 /* ---------- Main content ---------- */
 .content {
-    font-size: 24px;
+    font-size: 12px;
     line-height: 1.5;
     margin-top: 20px;
     margin-left: 220px;  /* clear the 200px left-side nav + a little gap */
@@ -121,6 +121,12 @@ nav footer {
 .content * {
     pointer-events: auto;  /* except the text itself, which stays selectable */
     user-select: text;
+}
+
+/* Headings stay at the larger nav-menu size so they read as titles above
+   the 12px body text/links below. */
+.content h1 {
+    font-size: 24px;
 }
 
 /* Flowing text that reflows into 1/2/3 columns depending on how much
