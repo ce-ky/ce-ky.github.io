@@ -6,7 +6,7 @@
     <title>{{ page.title | default: site.title }}</title>
     <link rel="icon" href="/favicon.ico">
 
-    <link rel="stylesheet" href="/style.css">
+    <link rel="stylesheet" href="/style.css?v={{ site.time | date: '%s' }}">
 
     <!-- Preload the primary pixel font so text doesn't flash on load -->
     <link rel="preload" href="/fonts/zpix.ttf" as="font" type="font/ttf" crossorigin>
@@ -18,6 +18,6 @@
 
     {{ content }}
 
-    <script src="/nav.js" defer></script>
+    <script src="/nav.js?v={{ site.time | date: '%s' }}" defer></script>
   </body>
 </html>

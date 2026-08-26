@@ -29,7 +29,7 @@ layout: default
   <p class="drawing-modal-caption"></p>
 </div>
 
-<script src="/drawing-waterfall.js" defer></script>
+<script src="/drawing-waterfall.js?v={{ site.time | date: '%s' }}" defer></script>
 {% else %}
 <main class="content" data-layout="grid">
   <div class="layout-toggle" role="group" aria-label="Layout">
@@ -57,5 +57,5 @@ layout: default
   </div>
 </main>
 
-<script src="/layout-toggle.js" data-storage-key="{{ page.collection_key }}Layout" defer></script>
+<script src="/layout-toggle.js?v={{ site.time | date: '%s' }}" data-storage-key="{{ page.collection_key }}Layout" defer></script>
 {% endif %}
