@@ -1,4 +1,5 @@
 ---
 title: test
-cover: /files/uploads/240210.gif
+cover: ""
 ---
+![](/files/uploads/240210.gif)
