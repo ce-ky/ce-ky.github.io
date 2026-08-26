@@ -1,3 +1,10 @@
 name = "ce-ky-github-io"
 main = "admin/oauth-worker/worker.js"
 compatibility_date = "2026-08-26"
+
+# Not secret — this ID is public by design (it shows up in the OAuth
+# redirect URL itself). Committing it here means it survives every
+# redeploy automatically, unlike a dashboard-set variable which seemed to
+# get reset by the next Workers Builds deploy.
+[vars]
+GITHUB_CLIENT_ID = "Ov23limm6yqtMKXLVXAz"
