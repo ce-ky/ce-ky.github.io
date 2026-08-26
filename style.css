@@ -125,7 +125,8 @@ nav footer {
 
 /* Headings stay at the larger nav-menu size so they read as titles above
    the 12px body text/links below. */
-.content h1 {
+.content h1,
+.entry-name {
     font-size: 24px;
 }
 
