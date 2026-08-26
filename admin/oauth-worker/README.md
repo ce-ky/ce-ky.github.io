@@ -32,12 +32,17 @@ There are two ways to get `worker.js` running on Cloudflare. Pick one.
 3. Cloudflare reads `wrangler.toml` at the repo root — it already points at
    `admin/oauth-worker/worker.js`, so leave the build settings as default
    (root directory `/`, no build command needed).
-4. Once the first deploy finishes, go to the worker's page → **Settings**
-   → **Variables and Secrets** → **Add**:
-   - `GITHUB_CLIENT_ID` = the Client ID from step 1
-   - `GITHUB_CLIENT_SECRET` = the Client Secret from step 1 (mark it as a
-     **secret**, not a plain text variable), then **Deploy** again so the
-     new variables take effect.
+4. `GITHUB_CLIENT_ID` is already set via `wrangler.toml` in this repo (it's
+   not sensitive — it's public in the OAuth redirect URL anyway). You only
+   need to add the secret by hand: worker's page → **Settings** →
+   **Variables and Secrets** → **Add** → `GITHUB_CLIENT_SECRET` = the Client
+   Secret from step 1, type **Secret** (not Text) → **Deploy**.
+   Check `<worker-url>/status` afterward — `has_client_secret` should read
+   `true`. If a later push resets it back to `false`, the dashboard-set
+   secret isn't surviving Workers Builds deploys in this account for some
+   reason; set it via the CLI instead (`npx wrangler secret put
+   GITHUB_CLIENT_SECRET`, needs a Cloudflare API token) so it's stored at
+   the account level rather than tied to one deploy.
 5. Note the worker's URL, shown at the top of its page:
    `https://<your-worker-name>.<your-subdomain>.workers.dev`. Every future
    push to this repo redeploys the worker automatically — a failed build
