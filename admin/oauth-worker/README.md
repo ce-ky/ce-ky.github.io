@@ -33,16 +33,27 @@ There are two ways to get `worker.js` running on Cloudflare. Pick one.
    `admin/oauth-worker/worker.js`, so leave the build settings as default
    (root directory `/`, no build command needed).
 4. `GITHUB_CLIENT_ID` is already set via `wrangler.toml` in this repo (it's
-   not sensitive — it's public in the OAuth redirect URL anyway). You only
-   need to add the secret by hand: worker's page → **Settings** →
-   **Variables and Secrets** → **Add** → `GITHUB_CLIENT_SECRET` = the Client
-   Secret from step 1, type **Secret** (not Text) → **Deploy**.
-   Check `<worker-url>/status` afterward — `has_client_secret` should read
-   `true`. If a later push resets it back to `false`, the dashboard-set
-   secret isn't surviving Workers Builds deploys in this account for some
-   reason; set it via the CLI instead (`npx wrangler secret put
-   GITHUB_CLIENT_SECRET`, needs a Cloudflare API token) so it's stored at
-   the account level rather than tied to one deploy.
+   not sensitive — it's public in the OAuth redirect URL anyway). The
+   secret still needs to be set, but **the dashboard's "Variables and
+   secrets" / "Runtime variables and secrets" panels have not been
+   reliably sticking for this project** — values entered there kept
+   reverting to unset. Skip them and use the **"Set Cloudflare Worker
+   secrets"** GitHub Action in this repo instead (Actions tab → select it
+   → **Run workflow**), which sets the secret directly via the Cloudflare
+   API. One-time setup for that:
+   - Create a Cloudflare API token: <https://dash.cloudflare.com/profile/api-tokens>
+     → **Create Token** → template **"Edit Cloudflare Workers"** → scope it
+     to your account → **Continue to summary** → **Create Token** → copy it
+     (shown once).
+   - In this GitHub repo: **Settings** → **Secrets and variables** →
+     **Actions** → **New repository secret**, add two:
+     - `CLOUDFLARE_API_TOKEN` = the token you just created
+     - `DECAP_GITHUB_CLIENT_SECRET` = the Client Secret from step 1
+   - **Actions** tab → **Set Cloudflare Worker secrets** → **Run workflow**.
+   - Check `<worker-url>/status` afterward — `has_client_secret` should
+     read `true`. Since this doesn't touch the dashboard at all, it
+     shouldn't get reset by the next `git push`; re-run the workflow if it
+     ever does.
 5. Note the worker's URL, shown at the top of its page:
    `https://<your-worker-name>.<your-subdomain>.workers.dev`. Every future
    push to this repo redeploys the worker automatically — a failed build
