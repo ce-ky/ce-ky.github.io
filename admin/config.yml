@@ -5,7 +5,7 @@ backend:
   # Points at the small OAuth proxy this site needs in front of GitHub's
   # login — see admin/oauth-worker/README.md for what this is and how to
   # deploy it. Update this URL once that's live.
-  base_url: https://REPLACE-WITH-YOUR-OAUTH-WORKER-URL
+  base_url: https://ce-ky-github-io.xt2236.workers.dev
   auth_endpoint: auth
 
 media_folder: "files/uploads"
