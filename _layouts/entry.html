@@ -1,0 +1,8 @@
+---
+layout: default
+---
+<main class="content">
+  <p class="entry-name">{{ page.title }}</p>
+  {% if page.cover %}<img src="{{ page.cover }}" alt="{{ page.title }}">{% endif %}
+  {{ content }}
+</main>

@@ -1,0 +1,73 @@
+backend:
+  name: github
+  repo: ce-ky/ce-ky.github.io
+  branch: main
+  # Points at the small OAuth proxy this site needs in front of GitHub's
+  # login — see admin/oauth-worker/README.md for what this is and how to
+  # deploy it. Update this URL once that's live.
+  base_url: https://ce-ky-github-io.xt2236.workers.dev
+  auth_endpoint: auth
+
+media_folder: "files/uploads"
+public_folder: "/files/uploads"
+
+collections:
+  - name: "projects"
+    label: "项目 Projects"
+    description: "游戏/项目条目，显示在 Games 页"
+    folder: "_projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "标题 Title", name: "title", widget: "string" }
+      - { label: "封面图 Cover", name: "cover", widget: "image", required: false }
+      - { label: "链接 Link", name: "link", widget: "string", required: false, hint: "留空则自动生成这条内容自己的详情页（用下面的正文）" }
+      - { label: "链接文字 Link label", name: "link_label", widget: "string", required: false, default: "Details" }
+      - { label: "新窗口打开 Open in new tab", name: "external", widget: "boolean", required: false, default: false }
+      - { label: "日期 Date", name: "date", widget: "datetime", required: false }
+      - { label: "正文 Body", name: "body", widget: "markdown", required: false }
+
+  - name: "drawings"
+    label: "画 Drawings"
+    description: "画作条目，显示在 Drawings 页"
+    folder: "_drawings"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "标题 Title", name: "title", widget: "string" }
+      - { label: "封面图 Cover", name: "cover", widget: "image", required: false }
+      - { label: "链接 Link", name: "link", widget: "string", required: false, hint: "留空则自动生成这条内容自己的详情页（用下面的正文）" }
+      - { label: "链接文字 Link label", name: "link_label", widget: "string", required: false, default: "Details" }
+      - { label: "新窗口打开 Open in new tab", name: "external", widget: "boolean", required: false, default: false }
+      - { label: "日期 Date", name: "date", widget: "datetime", required: false }
+      - { label: "正文 Body", name: "body", widget: "markdown", required: false }
+
+  - name: "other"
+    label: "其他工作 Other"
+    description: "其他工作条目，显示在 Other Stuffs 页"
+    folder: "_other"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "标题 Title", name: "title", widget: "string" }
+      - { label: "封面图 Cover", name: "cover", widget: "image", required: false }
+      - { label: "链接 Link", name: "link", widget: "string", required: false, hint: "留空则自动生成这条内容自己的详情页（用下面的正文）" }
+      - { label: "链接文字 Link label", name: "link_label", widget: "string", required: false, default: "Details" }
+      - { label: "新窗口打开 Open in new tab", name: "external", widget: "boolean", required: false, default: false }
+      - { label: "日期 Date", name: "date", widget: "datetime", required: false }
+      - { label: "正文 Body", name: "body", widget: "markdown", required: false }
+
+  - name: "log"
+    label: "记录 Log"
+    description: "记录/日志条目，显示在 Log 页"
+    folder: "_log"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "标题 Title", name: "title", widget: "string" }
+      - { label: "封面图 Cover", name: "cover", widget: "image", required: false }
+      - { label: "链接 Link", name: "link", widget: "string", required: false, hint: "留空则自动生成这条内容自己的详情页（用下面的正文）" }
+      - { label: "链接文字 Link label", name: "link_label", widget: "string", required: false, default: "Details" }
+      - { label: "新窗口打开 Open in new tab", name: "external", widget: "boolean", required: false, default: false }
+      - { label: "日期 Date", name: "date", widget: "datetime", required: false }
+      - { label: "正文 Body", name: "body", widget: "markdown", required: false }

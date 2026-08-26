@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page.title | default: site.title }}</title>
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- Preload the primary pixel font so text doesn't flash on load -->
+    <link rel="preload" href="/fonts/zpix.ttf" as="font" type="font/ttf" crossorigin>
+  </head>
+  <body>
+    <header>
+      {% include navbar.html %}
+    </header>
+
+    {{ content }}
+
+    <script src="/nav.js" defer></script>
+  </body>
+</html>
