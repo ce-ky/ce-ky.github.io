@@ -150,6 +150,10 @@ nav footer {
     z-index: 12;
 }
 
+.navfoot section {
+    font-size: 12px;
+}
+
 .contact {
     color: #000000;
     text-decoration: none;
