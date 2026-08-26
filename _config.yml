@@ -1,0 +1,66 @@
+title: 尺原 / Ceky
+description: Ceky's personal site.
+
+# GitHub Pages activates jekyll-theme-primer by default unless a theme is
+# explicitly set. This site has its own hand-written style.css, so turn
+# that off — leaving it on also makes the theme's bundled SCSS run through
+# the Sass converter, which errors out in some environments.
+theme: null
+
+markdown: kramdown
+
+collections:
+  projects:
+    output: true
+    permalink: /games/:path.html
+  drawings:
+    output: true
+    permalink: /drawings/:path.html
+  other:
+    output: true
+    permalink: /others/:path.html
+  log:
+    output: true
+    permalink: /log/:path.html
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: entry
+  - scope:
+      path: ""
+      type: drawings
+    values:
+      layout: entry
+  - scope:
+      path: ""
+      type: other
+    values:
+      layout: entry
+  - scope:
+      path: ""
+      type: log
+    values:
+      layout: entry
+
+# Files/dirs Jekyll should never touch. proto-proxima is an unrelated Astro
+# project also checked into this repo — its .astro files open with `---`,
+# which Jekyll misreads as YAML front matter and crashes on, so it must
+# stay excluded (see git history on .nojekyll for the incident).
+exclude:
+  - proto-proxima
+  - node_modules
+  - package.json
+  - package-lock.json
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - README.md
+  - CONTENT.md
+  - admin/oauth-worker

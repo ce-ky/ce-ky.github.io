@@ -1,0 +1,32 @@
+---
+layout: default
+---
+<main class="content" data-layout="grid">
+  <div class="layout-toggle" role="group" aria-label="Layout">
+    <button type="button" data-layout-btn="list">List</button>
+    <button type="button" data-layout-btn="grid">Grid</button>
+  </div>
+
+  {% assign items = site[page.collection_key] %}
+
+  <div class="layout-list">
+    {% for item in items %}
+      {% assign href = item.link | default: item.url %}
+      <p class="entry-name">{{ item.title }}</p>
+      <p><a href="{{ href }}"{% if item.external %} target="_blank"{% endif %}>{{ item.link_label | default: "Details" }}</a></p>
+      <hr>
+    {% endfor %}
+  </div>
+
+  <div class="card-grid layout-grid">
+    {% for item in items %}
+      {% assign href = item.link | default: item.url %}
+      <div class="card">
+        <p class="entry-name">{{ item.title }}</p>
+        <p><a href="{{ href }}"{% if item.external %} target="_blank"{% endif %}>{{ item.link_label | default: "Details" }}</a></p>
+      </div>
+    {% endfor %}
+  </div>
+</main>
+
+<script src="/layout-toggle.js" data-storage-key="{{ page.collection_key }}Layout" defer></script>

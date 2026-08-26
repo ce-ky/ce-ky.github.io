@@ -1,9 +1,11 @@
-// Loads the shared navbar, then keeps the main content's top edge lined up
-// with wherever the (vertically-centered, fixed) sidebar's title actually
-// renders, since that position shifts with viewport height.
+// Keeps the main content's top edge lined up with wherever the
+// (vertically-centered, fixed) sidebar's title actually renders, since
+// that position shifts with viewport height. The navbar itself is now
+// compiled straight into the page by Jekyll (see _includes/navbar.html),
+// so there's no fetch/injection step to wait on here anymore.
 (function () {
   function alignContentTop() {
-    var nav = document.querySelector('#navbar nav');
+    var nav = document.querySelector('header nav');
     var content = document.querySelector('.content');
     if (!nav || !content) return;
 
@@ -20,17 +22,11 @@
     content.style.marginTop = Math.max(top, 0) + 'px';
   }
 
-  fetch('/navbar.html')
-    .then(function (response) { return response.text(); })
-    .then(function (data) {
-      document.getElementById('navbar').innerHTML = data;
-      alignContentTop();
-      window.addEventListener('resize', alignContentTop);
-      // Custom fonts can still be loading at this point; their metrics
-      // differ from the fallback font, so re-measure once they're in.
-      if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(alignContentTop);
-      }
-    })
-    .catch(function (error) { console.error('Error loading navigation:', error); });
+  alignContentTop();
+  window.addEventListener('resize', alignContentTop);
+  // Custom fonts can still be loading at this point; their metrics differ
+  // from the fallback font, so re-measure once they're in.
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(alignContentTop);
+  }
 })();
