@@ -14,17 +14,34 @@
 const GITHUB_AUTHORIZE_URL = "https://github.com/login/oauth/authorize";
 const GITHUB_TOKEN_URL = "https://github.com/login/oauth/access_token";
 
+const WORKER_VERSION = "2026-08-26-1";
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    if (url.pathname === "/auth") {
-      return handleAuth(url, env);
+    try {
+      if (url.pathname === "/" || url.pathname === "/status") {
+        return new Response(
+          JSON.stringify({
+            ok: true,
+            worker_version: WORKER_VERSION,
+            has_client_id: Boolean(env.GITHUB_CLIENT_ID),
+            has_client_secret: Boolean(env.GITHUB_CLIENT_SECRET),
+          }, null, 2),
+          { headers: { "Content-Type": "application/json" } }
+        );
+      }
+      if (url.pathname === "/auth") {
+        return handleAuth(url, env);
+      }
+      if (url.pathname === "/callback") {
+        return handleCallback(url, env);
+      }
+      return new Response("Not found: " + url.pathname, { status: 404 });
+    } catch (err) {
+      return new Response("Worker error: " + (err && err.stack || err), { status: 500 });
     }
-    if (url.pathname === "/callback") {
-      return handleCallback(url, env);
-    }
-    return new Response("Not found", { status: 404 });
   },
 };
 
