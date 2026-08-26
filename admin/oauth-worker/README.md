@@ -36,11 +36,18 @@ There are two ways to get `worker.js` running on Cloudflare. Pick one.
    not sensitive — it's public in the OAuth redirect URL anyway). The
    secret still needs to be set, but **the dashboard's "Variables and
    secrets" / "Runtime variables and secrets" panels have not been
-   reliably sticking for this project** — values entered there kept
-   reverting to unset. Skip them and use the **"Set Cloudflare Worker
-   secrets"** GitHub Action in this repo instead (Actions tab → select it
-   → **Run workflow**), which sets the secret directly via the Cloudflare
-   API. One-time setup for that:
+   reliably sticking for this project**. Root cause, confirmed via a
+   failed `wrangler secret put` run: this project uses Cloudflare's
+   Workers Builds/versions flow, where a git-triggered build doesn't
+   automatically become the version actually receiving traffic — so
+   whichever version happened to be live when you checked `/status`
+   could easily be one from before a variable was set. Skip the dashboard
+   panels and use the **"Set Cloudflare Worker secrets"** GitHub Action in
+   this repo instead (Actions tab → select it → **Run workflow**), which
+   uses `wrangler versions secret put` (sets the secret independent of
+   which version is live) followed by `wrangler deploy` (promotes the
+   current code + that secret to be the live version). One-time setup for
+   that:
    - Create a Cloudflare API token: <https://dash.cloudflare.com/profile/api-tokens>
      → **Create Token** → template **"Edit Cloudflare Workers"** → scope it
      to your account → **Continue to summary** → **Create Token** → copy it
