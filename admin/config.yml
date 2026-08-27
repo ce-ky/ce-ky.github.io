@@ -32,9 +32,11 @@ collections:
     description: "画作条目，以瀑布流展示在 Drawings 页；没有单独的详情页，点击缩略图会直接弹窗展示这张图的原图"
     folder: "_drawings"
     create: true
-    slug: "{{slug}}"
+    # Not based on title (see below) since that's now optional — a
+    # timestamp keeps every entry's generated filename unique either way.
+    slug: "{{year}}{{month}}{{day}}{{hour}}{{minute}}{{second}}"
     fields:
-      - { label: "标题 Title", name: "title", widget: "string", hint: "会作为图片的 alt 文字和弹窗下方的说明" }
+      - { label: "标题 Title", name: "title", widget: "string", required: false, hint: "选填，会作为图片的 alt 文字和弹窗下方的说明；留空则不显示说明" }
       - { label: "图片 Image", name: "cover", widget: "image", required: true, hint: "瀑布流缩略图和点击后弹窗大图用的是同一张图，建议直接上传原图（不要提前裁剪/压缩），保证弹窗清晰" }
       - { label: "日期 Date", name: "date", widget: "datetime", required: false }
 

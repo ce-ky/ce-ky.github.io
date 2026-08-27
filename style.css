@@ -291,9 +291,12 @@ nav footer {
     flex: none;
 }
 
+/* max-width, not width: an image smaller than its column stays at its
+   natural size instead of being stretched up to fill it — upscaling past
+   native resolution is what makes an undersized upload look soft/blurry. */
 .drawing-item img {
     display: block;
-    width: 100%;
+    max-width: 100%;
     height: auto;
 }
 

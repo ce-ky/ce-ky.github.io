@@ -37,6 +37,16 @@ defaults:
       layout: entry
   - scope:
       path: ""
+      type: drawings
+    values:
+      # title is optional in admin/config.yml. Without this, Jekyll falls
+      # back to a title inferred from the filename for any drawing that
+      # omits it, and that fallback (built from the {{slug}} entries save
+      # under — a timestamp) would show up as a nonsense caption instead
+      # of no caption at all.
+      title: ""
+  - scope:
+      path: ""
       type: other
     values:
       layout: entry
