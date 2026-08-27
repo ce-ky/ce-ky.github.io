@@ -12,10 +12,13 @@ waterfall (masonry) gallery on `/drawings/menu.html` — columns of equal
 width, each image's height following its own aspect ratio, 1/2/3 columns
 depending on window width. There's no per-drawing detail page: clicking a
 thumbnail pops up that same image full-size instead. So a drawing entry
-only needs `title` and `cover` — skip `link`/`link_label`/`external`/`body`,
-they're not used. Upload the actual image (not a pre-shrunk thumbnail) as
-`cover`, since it's shown both as the gallery thumbnail and the full-size
-popup image.
+only needs `cover` (`title` is optional, just a caption) — skip
+`link`/`link_label`/`external`/`body`, they're not used. Upload the actual
+image (not a pre-shrunk thumbnail) as `cover`, since it's shown both as the
+gallery thumbnail and the full-size popup image — and upload it at a
+resolution at least as large as you'd ever want it displayed, since the
+waterfall stretches an undersized image up to fill its column, which
+looks soft/blurry the same way any upscaled image would.
 
 ## Option A — the `/admin` upload page
 
@@ -45,9 +48,9 @@ Anything written here becomes the body of this entry's own detail page
 (only used when `link` above is left out).
 ```
 
-For a drawing, put the file in `_drawings/` instead and only use `title`
-and `cover` (see below) — `link`/`link_label`/`external`/`date`/body text
-are ignored there.
+For a drawing, put the file in `_drawings/` instead and only use `cover`
+(`title` is optional — see below) — `link`/`link_label`/`external`/`date`/
+body text are ignored there.
 
 Commit. GitHub Pages rebuilds the site automatically within a minute or two.
 
@@ -68,8 +71,8 @@ Drawings:
 
 | Field | Required | What it does |
 |---|---|---|
-| `title` | yes | Used as the image's alt text and as the caption under the popup when a thumbnail is clicked. |
-| `cover` | yes | Path to the image. Shown as the waterfall thumbnail and, at full size, in the click-to-enlarge popup — upload the real image, not a shrunk-down version. |
+| `title` | no | Used as the image's alt text and as the caption under the popup when a thumbnail is clicked. Leave it out and the image just has no caption. |
+| `cover` | yes | Path to the image. Shown as the waterfall thumbnail and, at full size, in the click-to-enlarge popup — upload the real image, not a shrunk-down version, and at least as large as you'd want it shown (undersized images get stretched to fill their column and look blurry). |
 
 Files inside each folder list in filename order, so prefix filenames with a
 number (`01-`, `02-`, ...) if you care about the order they appear in.

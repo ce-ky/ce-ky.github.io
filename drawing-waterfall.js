@@ -60,7 +60,9 @@
   function openModal(img) {
     modalImg.src = img.dataset.full || img.src;
     modalImg.alt = img.alt || '';
-    modalCaption.textContent = img.dataset.caption || '';
+    var caption = img.dataset.caption || '';
+    modalCaption.textContent = caption;
+    modalCaption.hidden = !caption;
     modal.hidden = false;
   }
 
