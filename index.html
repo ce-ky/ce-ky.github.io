@@ -15,14 +15,14 @@ permalink: /index.html
     const CELL = 9;
     let craters = [];
 
-    // same 5-tone palette used by the 3D demo, for a fair comparison,
-    // paired with an ASCII density ramp from dark terrain to bright peaks
+    // monochrome 5-tone ramp from dark terrain to bright peaks, paired
+    // with an ASCII density ramp of the same length
     const PALETTE = [
-      [4, 36, 34],
-      [10, 78, 68],
-      [22, 140, 108],
-      [64, 214, 160],
-      [176, 255, 224]
+      [40, 40, 40],
+      [85, 85, 85],
+      [130, 130, 130],
+      [190, 190, 190],
+      [255, 255, 255]
     ];
     const RAMP = ['.', ':', '+', '*', '#'];
 
@@ -50,15 +50,15 @@ permalink: /index.html
       // soft atmosphere glow
       p.noFill();
       for (let g = 6; g > 0; g--) {
-        p.stroke(0, 255, 170, 10);
+        p.stroke(255, 255, 255, 10);
         p.strokeWeight(g * 2);
         p.circle(0, 0, RADIUS * 2 + g * 6);
       }
 
-      // dark terminal backdrop so the ASCII glyphs (including the palest
+      // black terminal backdrop so the ASCII glyphs (including the palest
       // tone) read clearly instead of washing out against the page
       p.noStroke();
-      p.fill(6, 14, 13);
+      p.fill(0, 0, 0);
       p.circle(0, 0, RADIUS * 2);
 
       const t = p.frameCount * 0.004;
