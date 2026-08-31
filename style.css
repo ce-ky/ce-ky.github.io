@@ -141,6 +141,21 @@ nav footer {
     break-inside: avoid;
 }
 
+/* Homepage: no copy, just the rotating 2D planet parked on the right
+   side of the content area, vertically centered. */
+.home-content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-height: calc(100vh - 40px);
+    margin: 0;
+    padding: 0;
+}
+
+.home-planet {
+    pointer-events: auto;
+}
+
 /* Responsive grid of cards, e.g. for game/drawing listings. Fits as many
    ~260px cards per row as the available width allows (1 on narrow
    screens, more as the window widens). */
@@ -383,5 +398,10 @@ nav footer {
         margin-left: 0;
         margin-right: 0;
         padding: 16px;
+    }
+
+    .home-content {
+        justify-content: center;
+        min-height: auto;
     }
 }
