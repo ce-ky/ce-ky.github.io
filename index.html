@@ -84,12 +84,6 @@ permalink: /index.html
           const d = p.sqrt(x * x + y * y);
           if (d > RADIUS) continue;
 
-          // black terminal backdrop per cell, not a smooth circle, so the
-          // silhouette comes out as a rough, stair-stepped edge instead of
-          // a perfect circle
-          p.fill(0, 0, 0);
-          p.rect(x, y, CELL, CELL);
-
           // sample the terrain in rotated space so the pattern turns while
           // each glyph stays put on the fixed screen grid
           const rx = x * ca - y * sa;
@@ -112,6 +106,24 @@ permalink: /index.html
           else if (shade > 0.32) tone = 2;
           else if (shade > 0.14) tone = 1;
           else tone = 0;
+
+          // hatched backdrop per cell (thin diagonal strokes, not a solid
+          // fill), so the page shows through the gaps instead of a flat
+          // black square; a paler glyph needs a darker backdrop to read
+          // against the page, so the darkest terrain (whose glyph is dark
+          // enough to read on its own) gets no hatch, and denser hatch is
+          // added as the terrain — and its glyph — gets brighter. This
+          // also keeps the silhouette a rough, stair-stepped edge instead
+          // of a perfect circle.
+          if (tone > 0) {
+            p.stroke(0, 0, 0, 110 + tone * 25);
+            p.strokeWeight(1);
+            for (let i = 0; i < tone; i++) {
+              const o = (i - (tone - 1) / 2) * 2.5;
+              p.line(x, y + o, x + CELL, y + CELL + o);
+            }
+            p.noStroke();
+          }
 
           const col = PALETTE[tone];
           p.fill(col[0], col[1], col[2]);
