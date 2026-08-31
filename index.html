@@ -55,17 +55,19 @@ permalink: /index.html
         p.circle(0, 0, RADIUS * 2 + g * 6);
       }
 
-      // black terminal backdrop so the ASCII glyphs (including the palest
-      // tone) read clearly instead of washing out against the page
       p.noStroke();
-      p.fill(0, 0, 0);
-      p.circle(0, 0, RADIUS * 2);
 
       const t = p.frameCount * 0.004;
       for (let y = -RADIUS; y <= RADIUS; y += CELL) {
         for (let x = -RADIUS; x <= RADIUS; x += CELL) {
           const d = p.sqrt(x * x + y * y);
           if (d > RADIUS) continue;
+
+          // black terminal backdrop per cell, not a smooth circle, so the
+          // silhouette comes out as a rough, stair-stepped edge instead of
+          // a perfect circle
+          p.fill(0, 0, 0);
+          p.rect(x, y, CELL, CELL);
 
           const n = p.noise((x + 1000) * 0.02 + t * 8, (y + 1000) * 0.02);
           const light = p.constrain(p.map(-x - y, -RADIUS * 1.4, RADIUS * 1.4, 1, 0), 0, 1);
