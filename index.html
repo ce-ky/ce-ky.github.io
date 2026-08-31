@@ -12,10 +12,11 @@ permalink: /index.html
   const sketch = function (p) {
     const SIZE = 480;
     const RADIUS = 160;
-    const CELL = 5;
+    const CELL = 9;
     let craters = [];
 
-    // same 5-tone palette used by the 3D demo, for a fair comparison
+    // same 5-tone palette used by the 3D demo, for a fair comparison,
+    // paired with an ASCII density ramp from dark terrain to bright peaks
     const PALETTE = [
       [4, 36, 34],
       [10, 78, 68],
@@ -23,12 +24,16 @@ permalink: /index.html
       [64, 214, 160],
       [176, 255, 224]
     ];
+    const RAMP = ['.', ':', '+', '*', '#'];
 
     p.setup = function () {
       const cnv = p.createCanvas(SIZE, SIZE);
       cnv.parent('planet-canvas');
       p.pixelDensity(1);
       p.noStroke();
+      p.textFont('monospace');
+      p.textSize(CELL * 1.3);
+      p.textAlign(p.CENTER, p.CENTER);
       p.randomSeed(7);
       for (let i = 0; i < 10; i++) {
         const ang = p.random(p.TWO_PI);
@@ -50,6 +55,12 @@ permalink: /index.html
         p.circle(0, 0, RADIUS * 2 + g * 6);
       }
 
+      // dark terminal backdrop so the ASCII glyphs (including the palest
+      // tone) read clearly instead of washing out against the page
+      p.noStroke();
+      p.fill(6, 14, 13);
+      p.circle(0, 0, RADIUS * 2);
+
       const t = p.frameCount * 0.004;
       for (let y = -RADIUS; y <= RADIUS; y += CELL) {
         for (let x = -RADIUS; x <= RADIUS; x += CELL) {
@@ -67,15 +78,16 @@ permalink: /index.html
           }
           shade -= craterDark;
 
-          let col;
-          if (shade > 0.72) col = PALETTE[4];
-          else if (shade > 0.52) col = PALETTE[3];
-          else if (shade > 0.32) col = PALETTE[2];
-          else if (shade > 0.14) col = PALETTE[1];
-          else col = PALETTE[0];
+          let tone;
+          if (shade > 0.72) tone = 4;
+          else if (shade > 0.52) tone = 3;
+          else if (shade > 0.32) tone = 2;
+          else if (shade > 0.14) tone = 1;
+          else tone = 0;
 
+          const col = PALETTE[tone];
           p.fill(col[0], col[1], col[2]);
-          p.rect(x, y, CELL, CELL);
+          p.text(RAMP[tone], x + CELL / 2, y + CELL / 2);
         }
       }
       p.pop();
