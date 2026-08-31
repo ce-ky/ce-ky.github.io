@@ -25,6 +25,9 @@ permalink: /index.html
       [255, 255, 255]
     ];
     const RAMP = ['.', ':', '+', '*', '#'];
+    const ROTATE_SPEED = 0.012;
+    const ORBIT_SPEED = 0.008;
+    let satellites = [];
 
     p.setup = function () {
       const cnv = p.createCanvas(SIZE, SIZE);
@@ -39,6 +42,17 @@ permalink: /index.html
         const ang = p.random(p.TWO_PI);
         const r = p.random(RADIUS * 0.15, RADIUS * 0.85);
         craters.push({ x: r * p.cos(ang), y: r * p.sin(ang), r: p.random(6, 22) });
+      }
+
+      // a ring of small circles of varying size, orbiting the planet
+      // around the Z axis (i.e. sweeping around in the view plane)
+      const SATELLITE_COUNT = 18;
+      for (let i = 0; i < SATELLITE_COUNT; i++) {
+        satellites.push({
+          angle: (i / SATELLITE_COUNT) * p.TWO_PI + p.random(-0.15, 0.15),
+          orbitRadius: p.random(RADIUS + 25, RADIUS + 65),
+          size: p.random(3, 12)
+        });
       }
     };
 
@@ -57,7 +71,13 @@ permalink: /index.html
 
       p.noStroke();
 
-      const t = p.frameCount * 0.004;
+      // spin around the Z axis: rotate the terrain sampling in-plane
+      // instead of scrolling it, so the whole disc appears to turn like a
+      // record rather than a globe spinning on a vertical axis
+      const angle = p.frameCount * ROTATE_SPEED;
+      const ca = p.cos(-angle);
+      const sa = p.sin(-angle);
+
       for (let y = -RADIUS; y <= RADIUS; y += CELL) {
         for (let x = -RADIUS; x <= RADIUS; x += CELL) {
           const d = p.sqrt(x * x + y * y);
@@ -69,13 +89,18 @@ permalink: /index.html
           p.fill(0, 0, 0);
           p.rect(x, y, CELL, CELL);
 
-          const n = p.noise((x + 1000) * 0.02 + t * 8, (y + 1000) * 0.02);
+          // sample the terrain in rotated space so the pattern turns while
+          // each glyph stays put on the fixed screen grid
+          const rx = x * ca - y * sa;
+          const ry = x * sa + y * ca;
+
+          const n = p.noise((rx + 1000) * 0.02, (ry + 1000) * 0.02);
           const light = p.constrain(p.map(-x - y, -RADIUS * 1.4, RADIUS * 1.4, 1, 0), 0, 1);
           let shade = n * 0.6 + light * 0.4;
 
           let craterDark = 0;
           for (const c of craters) {
-            const cd = p.dist(x, y, c.x, c.y);
+            const cd = p.dist(rx, ry, c.x, c.y);
             if (cd < c.r) craterDark = p.max(craterDark, p.map(cd, 0, c.r, 0.35, 0));
           }
           shade -= craterDark;
@@ -92,6 +117,20 @@ permalink: /index.html
           p.text(RAMP[tone], x + CELL / 2, y + CELL / 2);
         }
       }
+
+      // the orbiting ring: small circles of mixed sizes sweeping around
+      // the planet on the same Z axis
+      const orbitAngle = p.frameCount * ORBIT_SPEED;
+      for (const s of satellites) {
+        const sa2 = s.angle + orbitAngle;
+        const sx = p.cos(sa2) * s.orbitRadius;
+        const sy = p.sin(sa2) * s.orbitRadius;
+        // black, not white: this ring sits outside the planet's disc,
+        // over the page's white background rather than the black backdrop
+        p.fill(0, 0, 0);
+        p.circle(sx, sy, s.size);
+      }
+
       p.pop();
     };
   };
